@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 2026 Survey Blackbook — Free Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A1628;--navy2:#0D1E36;--blue:#1E4FC2;
+  --orange:#FF6B35;--orange-d:#E5551F;
+  --green:#22C55E;--gold:#D89010;
+  --text:#F0F4FF;--muted:#6A8AAA;
+  --card:#0F1D35;--border:#1A3050;
+}
+body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;line-height:1.65;min-height:100vh}
+
+.hero{max-width:660px;margin:0 auto;padding:44px 24px 28px;text-align:center}
+.badge{display:inline-block;background:rgba(255,107,53,.12);color:var(--orange);border:1px solid rgba(255,107,53,.32);padding:5px 18px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+
+/* book wrap — 2.6:3 ratio baked into SVG viewBox, CSS width controls display size */
+.book-wrap{width:290px;margin:0 auto 28px}
+.book-wrap svg{width:100%;height:auto;display:block}
+
+h1{font-family:'Sora',sans-serif;font-size:clamp(22px,5.5vw,35px);font-weight:800;line-height:1.15;color:#fff;margin-bottom:10px}
+h1 .hl{color:var(--orange)}
+.sub{font-size:clamp(14px,3vw,16px);color:var(--muted);max-width:490px;margin:0 auto 26px;line-height:1.7}
+
+.cta-btn{display:block;width:100%;max-width:450px;margin:0 auto;background:var(--orange);color:#fff;font-family:'Sora',sans-serif;font-size:17px;font-weight:700;padding:17px 22px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;text-align:center;transition:background .15s,transform .1s}
+.cta-btn:hover{background:var(--orange-d);transform:translateY(-1px)}
+.trust-line{font-size:12px;color:#2A3A52;margin-top:10px;text-align:center}
+.trust-line span{color:var(--green);font-weight:600}
+
+.sec{max-width:660px;margin:0 auto;padding:0 24px 44px}
+.pain{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--orange);padding:20px;margin-bottom:28px;font-size:15px;line-height:1.7;color:#8AAAC8}
+.pain strong{color:#fff}
+.sec-label{font-family:'Sora',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+.sec-title{font-family:'Sora',sans-serif;font-size:clamp(17px,4.5vw,25px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.25}
+.blist{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:28px}
+.blist li{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:#8AAAC8;line-height:1.6}
+.ck{flex-shrink:0;width:20px;height:20px;background:rgba(34,197,94,.14);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:11px;margin-top:2px}
+.blist li strong{color:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 12px;text-align:center}
+.stat-n{font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:#fff;display:block;margin-bottom:2px}
+.stat-l{font-size:11px;color:var(--muted);line-height:1.35}
+.plat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;display:flex;gap:13px;align-items:flex-start;margin-bottom:11px}
+.pp{flex-shrink:0;background:rgba(30,79,194,.22);border:1px solid rgba(30,79,194,.38);color:#7090C8;font-family:'Sora',sans-serif;font-size:10px;font-weight:700;padding:4px 9px;border-radius:5px;letter-spacing:.04em;text-transform:uppercase;min-width:44px;text-align:center}
+.pi{flex:1}.pn{font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#fff;margin-bottom:2px}
+.pr{font-size:13px;color:var(--gold);font-weight:600;margin-bottom:3px}
+.pd{font-size:13px;color:var(--muted);line-height:1.5}
+.locked{background:rgba(255,107,53,.05);border:1px dashed rgba(255,107,53,.28);border-radius:10px;padding:14px 17px;display:flex;align-items:center;gap:13px;margin-bottom:28px}
+.li-text{font-size:14px;color:#8AAAC8;line-height:1.55}
+.li-text strong{color:#fff}
+.etbl{width:100%;border-collapse:collapse;margin-bottom:28px;font-size:13px}
+.etbl th{background:rgba(30,79,194,.18);color:#7090C8;font-family:'Sora',sans-serif;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:9px 13px;text-align:left;border:1px solid var(--border)}
+.etbl td{border:1px solid var(--border);padding:10px 13px;color:#8AAAC8;background:var(--card);vertical-align:top}
+.etbl td:last-child{color:var(--green);font-weight:600}
+
+/* reddit thread */
+.thread-wrap{margin-bottom:32px}
+.thread-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.thread-icon{width:26px;height:26px;background:#0A1424;border:1px solid #1A2840;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.thread-info{flex:1}.thread-name{font-size:12px;color:#4A6A8A;font-weight:500}
+.thread-sub{font-size:11px;color:#1E2E42}
+.thread-count{font-size:11px;color:#1E2E42}
+.cmt{padding:12px 0;border-bottom:1px solid #0C1624}
+.cmt:last-child{border-bottom:none}
+.cmt-row{display:flex;gap:10px;align-items:flex-start}
+.av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;margin-top:1px}
+.cb{flex:1;min-width:0}
+.cn-row{display:flex;align-items:center;gap:5px;margin-bottom:4px;flex-wrap:wrap}
+.cn{font-size:12px;font-weight:600;color:#A0C0D8}
+.flair{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;font-weight:600}
+.flair.prolific{background:rgba(30,79,194,.2);color:#6A90C8;border:1px solid rgba(30,79,194,.28)}
+.flair.blur{background:rgba(60,60,80,.2);border:1px solid rgba(80,80,100,.2);color:transparent;filter:blur(3.5px);user-select:none;min-width:48px;display:inline-block;vertical-align:middle}
+.cdot{font-size:10px;color:#1A2A3A}.ct{font-size:11px;color:#1A2A3A}
+.ctxt{font-size:14px;color:#6A8AA8;line-height:1.65;margin-bottom:8px}
+.ctxt em{color:var(--gold);font-style:normal;font-weight:500}
+.cact{display:flex;align-items:center;gap:12px}
+.upv{display:flex;align-items:center;gap:4px;font-size:11px;color:#1E5A1E;background:rgba(30,90,30,.1);border:1px solid rgba(30,90,30,.2);padding:2px 8px;border-radius:3px}
+.ca{font-size:11px;color:#1A2A3A}
+.reply{margin-left:40px;margin-top:8px;padding-top:8px;border-top:1px solid #0A1220}
+.reply .ctxt{font-size:13px;color:#3A5A70}
+.reply .av{width:24px;height:24px;font-size:10px}
+
+.cta-bottom{background:linear-gradient(135deg,#0C1C34 0%,#0F2040 100%);border:1px solid var(--border);border-radius:12px;padding:28px 22px;text-align:center;margin-bottom:22px}
+.cta-bottom h2{font-family:'Sora',sans-serif;font-size:clamp(15px,4vw,21px);font-weight:700;color:#fff;margin-bottom:7px}
+.cta-bottom p{font-size:14px;color:var(--muted);margin-bottom:18px}
+.scarcity{font-size:12px;color:var(--orange);font-weight:600;margin-top:11px}
+.locker-note{background:rgba(216,144,16,.06);border:1px solid rgba(216,144,16,.18);border-radius:8px;padding:12px 15px;font-size:13px;color:#906010;line-height:1.6;margin-bottom:26px;text-align:center}
+.locker-note strong{color:var(--gold)}
+footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-size:11px;color:#1A2A3A;max-width:660px;margin:0 auto;line-height:1.8}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">2026 Edition — Just Updated</div>
+
+  <!-- 3D BOOK — flat polygon shading, 2.6:3 ratio, viewBox 390×450 -->
+  <div class="book-wrap">
+    <svg viewBox="0 0 460 500" xmlns="http://www.w3.org/2000/svg">
+      <!--
+        SHARED VERTICES (all faces use these exact coords):
+        A=(108,84)  B=(154,70)  C=(154,432)  D=(108,446)
+        E=(452,52)  F=(452,414) G=(408,44)   H=(408,406)
+        Face: B->E->F->C  width=298 height=362 ratio=0.823≈2.5:3
+      -->
+      <ellipse cx="280" cy="490" rx="200" ry="10" fill="#000" fill-opacity="0.50"/>
+
+      <!-- PAGE STACK — right edge always at x=154, top=70, bottom=432 -->
+      <polygon points="108,84  112,83  112,447 108,447" fill="#B4AC94"/>
+      <polygon points="112,83  116,82  116,446 112,447" fill="#BEB6A0"/>
+      <polygon points="116,82  120,81  120,445 116,446" fill="#C8C0AA"/>
+      <polygon points="120,81  124,80  124,444 120,445" fill="#CEC8B4"/>
+      <polygon points="124,80  128,79  128,443 124,444" fill="#D4CEBC"/>
+      <polygon points="128,79  132,78  132,442 128,443" fill="#D8D2C0"/>
+      <polygon points="132,78  136,77  136,441 132,442" fill="#DDD7C6"/>
+      <polygon points="136,77  140,76  140,440 136,441" fill="#E0DAC8"/>
+      <polygon points="140,76  144,75  144,439 140,440" fill="#E4DECE"/>
+      <polygon points="144,75  148,74  148,438 144,439" fill="#E7E1D0"/>
+      <polygon points="148,74  151,73  151,436 148,438" fill="#E9E3D2"/>
+      <polygon points="151,73  154,70  154,432 151,436" fill="#EBE5D4"/>
+
+      <!-- SPINE — A(108,84) B(154,70) C(154,432) D(108,446) -->
+      <polygon points="108,84  154,70  154,432 108,446" fill="#050C18"/>
+      <polygon points="146,71  154,70  154,432 146,433" fill="#0A1828"/>
+      <polygon points="108,84  112,83  112,447 108,447" fill="#040A14"/>
+
+      <!-- TOP EDGE — A(108,84) B(154,70) E(452,52) G(408,44) -->
+      <polygon points="108,84  154,70  452,52  408,44" fill="#BEB298"/>
+      <polygon points="108,84  154,70  154,76  108,90" fill="#A6A086"/>
+
+      <!-- BOTTOM EDGE — D(108,446) C(154,432) F(452,414) H(408,406) -->
+      <polygon points="108,446 154,432 452,414 408,406" fill="#6E6858"/>
+
+      <!-- COVER FACE — B(154,70) E(452,52) F(452,414) C(154,432) — FLAT colour, no darkening strips -->
+      <polygon points="154,70  452,52  452,414 154,432" fill="#0E2248"/>
+
+      <!-- ONLY tiny left-edge ambient strip, max width 30px, fades out -->
+      <polygon points="154,70  184,69  184,148 154,158" fill="#162E5A" opacity="0.40"/>
+
+      <!-- crease line B→C -->
+      <line x1="154" y1="70" x2="154" y2="432" stroke="#1C3E70" stroke-width="2"/>
+
+      <!-- TOP GOLD BAR -->
+      <polygon points="166,90  440,72  440,91  166,109" fill="#AA7A08"/>
+      <polygon points="166,90  440,72  440,83  166,101" fill="#F0C020"/>
+      <!-- BOTTOM GOLD BAR -->
+      <polygon points="166,394 440,376 440,395 166,413" fill="#AA7A08"/>
+      <polygon points="166,394 440,376 440,387 166,406" fill="#F0C020"/>
+
+      <!-- ref lines -->
+      <text x="172" y="122" font-family="Georgia,serif" font-size="9" fill="#1E3450" fill-opacity="0.72">REF: SBK-2026</text>
+      <text x="434" y="116" text-anchor="end" font-family="Georgia,serif" font-size="9" fill="#1E3450" fill-opacity="0.72">RESTRICTED</text>
+
+      <!-- THE 2026 US -->
+      <text x="303" y="163" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#4A6888" letter-spacing="5" textLength="158" lengthAdjust="spacing">THE  2026  US</text>
+      <!-- SURVEY -->
+      <text x="303" y="232" text-anchor="middle" font-family="Georgia,serif" font-size="52" font-weight="700" fill="#FFFFFF" textLength="232" lengthAdjust="spacingAndGlyphs">SURVEY</text>
+      <!-- BLACKBOOK -->
+      <text x="303" y="290" text-anchor="middle" font-family="Georgia,serif" font-size="52" font-weight="700" fill="#EAB020" textLength="240" lengthAdjust="spacingAndGlyphs">BLACKBOOK</text>
+
+      <line x1="184" y1="304" x2="422" y2="291" stroke="#A07010" stroke-width="0.8" opacity="0.45"/>
+      <text x="303" y="328" text-anchor="middle" font-family="Georgia,serif" font-size="11.5" fill="#426080" textLength="216" lengthAdjust="spacing">5 Platforms  ·  $15–$40/hr  ·  Direct Links</text>
+      <text x="303" y="356" text-anchor="middle" font-family="serif" font-size="14" fill="#C89010" fill-opacity="0.60">★  ★  ★  ★  ★</text>
+      <text x="303" y="373" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#2A4262" fill-opacity="0.70">3,800+ downloads</text>
+
+      <!-- VERIFIED STAMP -->
+      <g transform="rotate(-17, 303, 258)">
+        <rect x="192" y="214" width="222" height="88" rx="3" fill="none" stroke="#BC1800" stroke-width="3.2" opacity="0.68"/>
+        <rect x="200" y="222" width="206" height="72" rx="2" fill="none" stroke="#BC1800" stroke-width="0.9" opacity="0.44"/>
+        <text x="303" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="26" font-weight="700" fill="#CC1800" fill-opacity="0.74" letter-spacing="4" textLength="138" lengthAdjust="spacing">VERIFIED</text>
+        <text x="303" y="279" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#AA1400" fill-opacity="0.52" letter-spacing="1.5" textLength="116" lengthAdjust="spacing">SRV-2026-BLACKBOOK</text>
+        <text x="303" y="294" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#AA1400" fill-opacity="0.42" letter-spacing="1" textLength="104" lengthAdjust="spacing">INTELLIGENCE DIV.</text>
+      </g>
+
+      <!-- SPINE TEXT -->
+      <text x="131" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" fill="#1A3450" fill-opacity="0.65" transform="rotate(-90,131,258)" letter-spacing="2.5">SURVEY BLACKBOOK · 2026</text>
+    </svg>
+  </div>
+
+  <h1>Every Day on Swagbucks, Someone Else Makes <span class="hl">$18/Hour</span> on a Platform You've Never Heard Of</h1>
+  <p class="sub">I tested 47 platforms over 3 months. Most are trash. These 5 are the only ones worth your time — none of them are on any "make money" blog.</p>
+
+  <div style="margin-bottom:12px">
+    <a href="YOUR_CPAGRIP_LOCKER_URL" class="cta-btn">UNLOCK THE BLACKBOOK — IT'S FREE →</a>
+  </div>
+  <p class="trust-line"><span>✓ Free</span> &nbsp;·&nbsp; <span>✓ No Credit Card</span> &nbsp;·&nbsp; <span>✓ No Email Required</span> &nbsp;·&nbsp; 3,800+ downloads this month</p>
+</div>
+
+<div class="sec">
+  <div class="pain">
+    You're 12 minutes into a survey. Almost done. Then: <strong>"Sorry, you don't qualify."</strong> You earned $0.04. You already know how this goes.<br><br>
+    The problem isn't you. <strong>Mainstream platforms are built to screen people out — that's how they profit.</strong> The ones that actually pay don't advertise. That's what this guide is.
+  </div>
+
+  <div class="sec-label">What's inside</div>
+  <div class="sec-title">5 Platforms, Direct Links, and the Blueprint to Stop Getting Screened Out</div>
+  <ul class="blist">
+    <li><div class="ck">✓</div><div><strong>Direct sign-up links to all 5 platforms</strong> — click, sign up, start earning the same day.</div></li>
+    <li><div class="ck">✓</div><div><strong>"Start Here" 24-hour checklist on page 1</strong> — exactly what to do first to earn within hours.</div></li>
+    <li><div class="ck">✓</div><div><strong>The Anti-Disqualification Blueprint</strong> — 3 answers that stop screener algorithms from rejecting you.</div></li>
+    <li><div class="ck">✓</div><div><strong>Realistic earnings with real timeframes</strong> — Week 1, Month 1, ongoing. Honest numbers.</div></li>
+    <li><div class="ck">✓</div><div><strong>The Stacking Method</strong> — run 2–3 platforms in one afternoon without burning out or getting flagged.</div></li>
+  </ul>
+
+  <div class="stats">
+    <div class="stat"><span class="stat-n">5</span><span class="stat-l">Verified Platforms</span></div>
+    <div class="stat"><span class="stat-n">$15–$40</span><span class="stat-l">Hourly Range</span></div>
+    <div class="stat"><span class="stat-n">3,800+</span><span class="stat-l">Downloads</span></div>
+  </div>
+
+  <div class="sec-label">Confirmed real — platform #1</div>
+  <div class="sec-title">One Preview. The Rest Are Inside.</div>
+  <div class="plat-card">
+    <div class="pp">#1</div>
+    <div class="pi">
+      <div class="pn">Prolific</div>
+      <div class="pr">$8 – $15+/hour · Academic research</div>
+      <div class="pd">Used by Oxford, MIT, and Cambridge researchers. Zero mid-survey disqualifications — banned by platform policy. Currently operating a waitlist: sign up immediately.</div>
+    </div>
+  </div>
+  <div class="locked">
+    <span style="font-size:18px;flex-shrink:0">🔒</span>
+    <div class="li-text"><strong>Platforms #2 through #5 are inside the Blackbook.</strong> Including one that pays $20/hr minimum to rate AI responses, and one that pays $25–$150 per brand mission on your phone.</div>
+  </div>
+
+  <div class="sec-label">Honest numbers</div>
+  <div class="sec-title">What to Actually Expect</div>
+  <table class="etbl">
+    <thead><tr><th>Timeframe</th><th>Activity</th><th>Range</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Day 1</strong></td><td>Setup — sign up, profiles, screenings</td><td>$0 (setup)</td></tr>
+      <tr><td><strong>Week 1</strong></td><td>First studies, 1–2 tests</td><td>$25 – $65</td></tr>
+      <tr><td><strong>Month 1</strong></td><td>All 5 active, 8–10 hrs/week</td><td>$150 – $400</td></tr>
+      <tr><td><strong>Ongoing</strong></td><td>Stacking + brand missions</td><td>$400 – $800/mo</td></tr>
+    </tbody>
+  </table>
+
+  <div class="thread-wrap">
+    <div class="thread-bar">
+      <div class="thread-icon">💬</div>
+      <div class="thread-info">
+        <div class="thread-name">r/beermoney · what actually worked for you this year?</div>
+        <div class="thread-sub">847 comments · sorted by: top</div>
+      </div>
+      <div class="thread-count">↑ 94%</div>
+    </div>
+    <div class="cmt">
+      <div class="cmt-row">
+        <div class="av" style="background:#122438;color:#4A78A8">JM</div>
+        <div class="cb">
+          <div class="cn-row"><span class="cn">jessica_m_ohio</span><span class="flair prolific">Prolific</span><span class="cdot">·</span><span class="ct">3 weeks ago</span></div>
+          <div class="ctxt">okay so downloaded the blackbook and was fully ready to be disappointed lol. checklist on page 1 is actually useful — only wish the links opened in new tabs bc i kept losing my place. but prolific is legit. had <em>4 studies waiting when i woke up day 2</em>. made $38 that first weekend just watching tv. the no-disqualification thing is real, kept bracing for it and it never happened</div>
+          <div class="cact"><div class="upv">▲ 94</div><div class="ca">Reply</div><div class="ca">Share</div></div>
+        </div>
+      </div>
+      <div class="reply">
+        <div class="cmt-row">
+          <div class="av" style="background:#0C1A28;color:#264860">PK</div>
+          <div class="cb">
+            <div class="cn-row"><span class="cn">pk_denver</span><span class="cdot">·</span><span class="ct">3 weeks ago</span></div>
+            <div class="ctxt">same. fill the demographic section completely, that's the key. slow first 2 days then studies just start appearing</div>
+            <div class="cact"><div class="upv">▲ 31</div><div class="ca">Reply</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cmt">
+      <div class="cmt-row">
+        <div class="av" style="background:#1E1808;color:#887020">TR</div>
+        <div class="cb">
+          <div class="cn-row"><span class="cn">TylerRen_ATL</span><span class="flair blur">███████████</span><span class="cdot">·</span><span class="ct">5 days ago</span></div>
+          <div class="ctxt">failed the first screening because i rushed it and wrote short answers. retook it carefully, got into the higher pay tier. now i do 2 hrs in the evenings, <em>made $43 yesterday</em>. gets repetitive ngl but $20/hr repetitive is fine</div>
+          <div class="cact"><div class="upv">▲ 67</div><div class="ca">Reply</div><div class="ca">Share</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cmt">
+      <div class="cmt-row">
+        <div class="av" style="background:#081C10;color:#207840">SR</div>
+        <div class="cb">
+          <div class="cn-row"><span class="cn">samramirez_pdx</span><span class="flair blur">██████</span><span class="cdot">·</span><span class="ct">2 weeks ago</span></div>
+          <div class="ctxt">one of the platforms has you film yourself using a product for a few days. got accepted to a mission last week — <em>$90 for 9 minutes of video total</em>. my boyfriend thought i was doing something weird talking to my phone at 7am then paypal went ding and he got real quiet 😂</div>
+          <div class="cact"><div class="upv">▲ 158</div><div class="ca">Reply</div><div class="ca">Share</div></div>
+        </div>
+      </div>
+      <div class="reply">
+        <div class="cmt-row">
+          <div class="av" style="background:#0A1620;color:#224458">AL</div>
+          <div class="cb">
+            <div class="cn-row"><span class="cn">andi_loo_tx</span><span class="cdot">·</span><span class="ct">2 weeks ago</span></div>
+            <div class="ctxt">lmao "paypal went ding" is so real. how long did approval take after applying?</div>
+            <div class="cact"><div class="upv">▲ 22</div><div class="ca">Reply</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cmt">
+      <div class="cmt-row">
+        <div class="av" style="background:#160E22;color:#604898">MK</div>
+        <div class="cb">
+          <div class="cn-row"><span class="cn">mkwong_sf</span><span class="flair blur">████████████</span><span class="cdot">·</span><span class="ct">1 month ago</span></div>
+          <div class="ctxt">been doing surveys 2 years and almost skipped this thinking it'd be "sign up for swagbucks" again. it's not. the disqualification section — specifically claiming to be the decision maker — i was getting screened out 65% of the time before. month 1 total across 3 platforms: <em>$312</em>. consistent</div>
+          <div class="cact"><div class="upv">▲ 219</div><div class="ca">Reply</div><div class="ca">Share</div><div class="ca">Award</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cmt">
+      <div class="cmt-row">
+        <div class="av" style="background:#14081A;color:#603888">LP</div>
+        <div class="cb">
+          <div class="cn-row"><span class="cn">laurenp_nashville</span><span class="flair blur">███████████</span><span class="cdot">·</span><span class="ct">1 week ago</span></div>
+          <div class="ctxt">one platform doesn't have tons of work every day but when tests show up they're fast money. <em>did 3 last tuesday, made $30 in under an hour</em>. the tip about talking constantly is accurate — got a lower rating once for being too quiet</div>
+          <div class="cact"><div class="upv">▲ 48</div><div class="ca">Reply</div><div class="ca">Share</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-bottom">
+    <h2>Get the Full Blackbook — It's Free</h2>
+    <p>All 5 platforms. Direct links. 24-hour checklist. Anti-disqualification rules. Stacking method.</p>
+    <a href="YOUR_CPAGRIP_LOCKER_URL" class="cta-btn">UNLOCK INSTANT ACCESS →</a>
+    <p class="scarcity">⚡ Prolific has an active waitlist — every week you delay is earnings gone</p>
+  </div>
+  <div class="locker-note">
+    <strong>Why a quick verification?</strong> To keep this out of bots' hands. One offer, under 30 seconds — your download unlocks immediately after.
+  </div>
+</div>
+
+<footer>
+  Free educational resource. Earnings are realistic estimates and not guaranteed. Individual results vary. Not affiliated with any platform mentioned.<br><br>
+  © 2026 Survey Blackbook &nbsp;·&nbsp; Free Resource &nbsp;·&nbsp; No Spam
+</footer>
+</body>
+</html>
