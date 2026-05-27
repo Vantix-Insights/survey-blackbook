@@ -9,28 +9,20 @@
 
 <!--
   ════════════════════════════════════════════════
-  STEP 1 — Replace the src below with YOUR CPAgrip
-  URL Locker script tag. Found in CPAgrip dashboard:
-  Monetization Tools → URL Lockers → Get Code
-  It will look like:
-  https://ridefiles.net/script_include.php?id=XXXXXXX
+  CPAgrip URL LOCKER — SETUP INSTRUCTIONS
+  ════════════════════════════════════════════════
+  1. Log into CPAgrip → Monetization Tools
+     → URL Lockers → create or edit your locker
+  2. In the locker's CUSTOMIZE tab, paste:
+       • Header Text  (see CPAGRIP_SETUP.md)
+       • CSS          (see CPAGRIP_SETUP.md)
+       • Custom HTML  (see CPAGRIP_SETUP.md)
+  3. Save the locker. Copy its URL —
+     looks like: https://ridefiles.net/XXXXXXX
+  4. Replace both YOUR_CPAGRIP_LOCKER_URL below
+     with that URL.  (2 places: hero + bottom CTA)
   ════════════════════════════════════════════════
 -->
-<script src="https://ridefiles.net/script_include.php?id=1897604"></script>
-
-<script>
-/* Triggered by both CTA buttons */
-function openLocker() {
-  if (typeof call_locker === 'function') {
-    call_locker();
-  } else {
-    /* Fallback: retry once after 800ms if script not yet ready */
-    setTimeout(function() {
-      if (typeof call_locker === 'function') { call_locker(); }
-    }, 800);
-  }
-}
-</script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -55,7 +47,7 @@ h1{font-family:'Sora',sans-serif;font-size:clamp(22px,5.5vw,35px);font-weight:80
 h1 .hl{color:var(--orange)}
 .sub{font-size:clamp(14px,3vw,16px);color:var(--muted);max-width:490px;margin:0 auto 26px;line-height:1.7}
 
-/* ── CTA BUTTON — button element, calls openLocker() ── */
+/* ── CTA BUTTON — <a> tag, links directly to CPAgrip locker ── */
 .cta-btn{display:block;width:100%;max-width:450px;margin:0 auto;background:var(--orange);color:#fff;font-family:'Sora',sans-serif;font-size:17px;font-weight:700;padding:17px 22px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;text-align:center;transition:background .15s,transform .1s;letter-spacing:.01em}
 .cta-btn:hover{background:var(--orange-d);transform:translateY(-1px)}
 .trust-line{font-size:12px;color:#2A3A52;margin-top:10px;text-align:center}
@@ -140,10 +132,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
       <ellipse cx="207" cy="440" rx="185" ry="10" fill="#000" fill-opacity="0.50"/>
 
       <!-- PAGE STACK: right edge x=82, top y=80, bottom y=412
-           Left edge tapers: top goes from y=96(x=30) to y=80(x=82)
-                             bottom goes from y=430(x=30) to y=412(x=82)
-           Linear: top_y(x) = 96 + (80-96)*(x-30)/(82-30) = 96 - 0.308*(x-30)
-                   bot_y(x) = 430 + (412-430)*(x-30)/(82-30) = 430 - 0.346*(x-30) -->
+           Linear gradient from dark left to light right -->
       <polygon points="30,96   34,95   34,429  30,430" fill="#AEA690"/>
       <polygon points="34,95   38,94   38,428  34,429" fill="#B8B09A"/>
       <polygon points="38,94   42,93   42,427  38,428" fill="#C0B8A2"/>
@@ -153,7 +142,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
       <polygon points="54,90   58,89   58,423  54,424" fill="#D8D2C0"/>
       <polygon points="58,89   62,88   62,422  58,423" fill="#DCD6C4"/>
       <polygon points="62,88   66,87   66,421  62,422" fill="#E0DAC8"/>
-      <polygon points="66,87   70,86   70,420  66,421" fill="#E2DCCa"/>
+      <polygon points="66,87   70,86   70,420  66,421" fill="#E2DCCA"/>
       <polygon points="70,86   74,85   74,419  70,420" fill="#E5DFCC"/>
       <polygon points="74,85   78,84   78,418  74,419" fill="#E7E1CE"/>
       <polygon points="78,84   82,80   82,412  78,418" fill="#E9E3D0"/>
@@ -173,8 +162,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
       <!-- BOTTOM EDGE: P2(30,430) P4(82,412) P6(359,394) P8(315,386) -->
       <polygon points="30,430  82,412  359,394  315,386" fill="#6A6450"/>
 
-      <!-- COVER FACE: P3(82,80) P5(359,62) P6(359,394) P4(82,412)
-           FLAT colour only — no darkening strips that cause banding -->
+      <!-- COVER FACE: P3(82,80) P5(359,62) P6(359,394) P4(82,412) -->
       <polygon points="82,80  359,62  359,394  82,412" fill="#0E2248"/>
 
       <!-- Tiny left ambient — only 26px wide, very low opacity -->
@@ -237,9 +225,9 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
   <h1>Every Day on Swagbucks, Someone Else Makes <span class="hl">$18/Hour</span> on a Platform You've Never Heard Of</h1>
   <p class="sub">I tested 47 platforms over 3 months. Most are trash. These 5 are the only ones worth your time — none of them are on any "make money" blog.</p>
 
-  <!-- TOP CTA — calls openLocker() -->
+  <!-- TOP CTA — replace YOUR_CPAGRIP_LOCKER_URL with your locker link -->
   <div style="margin-bottom:12px">
-    <button class="cta-btn" onclick="openLocker()">UNLOCK THE BLACKBOOK — IT'S FREE →</button>
+    <a class="cta-btn" href="YOUR_CPAGRIP_LOCKER_URL" target="_blank" rel="noopener">UNLOCK THE BLACKBOOK — IT'S FREE →</a>
   </div>
   <p class="trust-line">
     <span>✓ Free</span> &nbsp;·&nbsp;
@@ -386,11 +374,11 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
     </div>
   </div><!-- /thread -->
 
-  <!-- BOTTOM CTA — also calls openLocker() -->
+  <!-- BOTTOM CTA — replace YOUR_CPAGRIP_LOCKER_URL with your locker link -->
   <div class="cta-bottom">
     <h2>Get the Full Blackbook — It's Free</h2>
     <p>All 5 platforms. Direct links. 24-hour checklist. Anti-disqualification rules. Stacking method.</p>
-    <button class="cta-btn" onclick="openLocker()">UNLOCK INSTANT ACCESS →</button>
+    <a class="cta-btn" href="YOUR_CPAGRIP_LOCKER_URL" target="_blank" rel="noopener">UNLOCK INSTANT ACCESS →</a>
     <p class="scarcity">⚡ Prolific has an active waitlist — every week you delay is earnings gone</p>
   </div>
 
