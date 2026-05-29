@@ -224,12 +224,12 @@ body .sib-form[style] {
   pointer-events: none !important;
 }
 
-/* Success panel — HIDDEN by default. Our custom JS shows it only after
-   Brevo's server returns HTTP 200 (contact confirmed added to list).
-   Do NOT set display:block here — JS controls visibility entirely. */
+/* Success panel — hidden by the :where(.sib-form-message-panel){display:none}
+   rule at the top of the page. JS sets successEl.style.display='block' to
+   reveal it — inline styles beat :where() without needing !important.
+   Do NOT add display:none !important here — that would block JS from showing it. */
 #success-message,
 #success-message.sib-form-message-panel {
-  display: none !important;
   background: rgba(34,197,94,.08) !important;
   border: 1px solid rgba(34,197,94,.25) !important;
   border-radius: 8px !important;
@@ -242,7 +242,6 @@ body .sib-form[style] {
   margin-top: 12px !important;
   margin-bottom: 0 !important;
 }
-/* JS sets inline style="display:block" to reveal — that beats !important */
 #success-message .sib-form-message-panel__inner-text {
   color: #22C55E !important;
 }
@@ -387,7 +386,7 @@ body .sib-form[style] {
           Hidden by default via :where(.sib-form-message-panel){display:none}
           at the top of the page — Brevo's JS removes that to reveal it.
         -->
-        <div id="success-message" class="sib-form-message-panel" style="font-family:Helvetica,sans-serif;font-size:16px;text-align:left;color:#085229;background-color:#e7faf0;border-color:#13ce66;border-radius:3px;max-width:540px;margin-top:12px;">
+        <div id="success-message" class="sib-form-message-panel">
           <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
             <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
               <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z"/>
