@@ -392,7 +392,7 @@ body .sib-form[style] {
             <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
               <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z"/>
             </svg>
-            <span class="sib-form-message-panel__inner-text">📬 &nbsp;Cheat sheet is on its way — check your inbox in 2 minutes.</span>
+            <span class="sib-form-message-panel__inner-text">📬 &nbsp;Cheat sheet is on its way — check your inbox in 2 minutes. If you don't see it, check your spam or junk folder and mark it as not spam.</span>
           </div>
         </div>
 
@@ -419,40 +419,29 @@ body .sib-form[style] {
   </div>
 </div>
 
-<script>
-/*
-  ══ CUSTOM BREVO FORM HANDLER ══════════════════════════════════════════
-  We intercept the form submit and POST it ourselves via fetch().
-  The success panel is shown ONLY after Brevo's server confirms the
-  contact was added (HTTP 200). This means the message appears only
-  when the email is genuinely in the list — not a moment before.
+<!-- Hidden iframe — receives the Brevo POST response (bypasses CORS entirely) -->
+<iframe name="brevo-target" id="brevo-target" style="display:none;" aria-hidden="true"></iframe>
 
-  Why we removed Brevo's main.js:
-  Brevo's bundled main.js shows the success panel the instant the
-  fetch() promise resolves (client-side), before confirming the
-  server accepted the contact. By owning the fetch we can gate the
-  success panel on the actual server response.
-  ══════════════════════════════════════════════════════════════════════
-*/
+<script>
 document.addEventListener('DOMContentLoaded', function () {
-  var form       = document.getElementById('sib-form');
-  var btn        = form ? form.querySelector('button[type="submit"]') : null;
-  var successEl  = document.getElementById('success-message');
-  var inputEl    = document.getElementById('EMAIL');
-  var errorLabel = form ? form.querySelector('.entry__error') : null;
+  var form      = document.getElementById('sib-form');
+  var btn       = form ? form.querySelector('button[type="submit"]') : null;
+  var successEl = document.getElementById('success-message');
+  var inputEl   = document.getElementById('EMAIL');
+  var errorLabel= form ? form.querySelector('.entry__error') : null;
+  var container = document.getElementById('sib-container');
 
   if (!form || !btn || !successEl || !inputEl) return;
 
-  /* Keep success panel invisible until we explicitly show it */
-  successEl.style.display = 'none';
+  /* Route the native POST into the hidden iframe — no fetch, no CORS */
+  form.setAttribute('target', 'brevo-target');
 
   form.addEventListener('submit', function (e) {
-    e.preventDefault(); /* stop native POST / Brevo JS navigation */
-
     var email = inputEl.value.trim();
 
-    /* ── Client-side validation ── */
+    /* Client-side validation — stop submit if invalid */
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      e.preventDefault();
       inputEl.style.borderColor = '#CC2000';
       if (errorLabel) {
         errorLabel.textContent = 'Please enter a valid email address.';
@@ -461,53 +450,22 @@ document.addEventListener('DOMContentLoaded', function () {
       inputEl.focus();
       return;
     }
+
+    /* Valid — let the native POST fire into the iframe */
     inputEl.style.borderColor = '#1A3050';
     if (errorLabel) errorLabel.style.display = 'none';
-
-    /* ── Disable button, show sending state ── */
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    /* ── Build form-encoded body exactly as Brevo expects ── */
-    var body = new URLSearchParams();
-    body.append('EMAIL', email);
-    body.append('email_address_check', ''); /* honeypot */
-    body.append('locale', 'en');
-    body.append('html_type', 'simple');
-
-    /* ── POST to Brevo servers ── */
-    fetch(form.action, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body.toString()
-    })
-    .then(function (res) {
-      /*
-        Brevo's sibforms endpoint returns 200 on success.
-        Any non-200 means the contact was NOT added.
-      */
-      if (res.ok) {
-        /* Server confirmed — now show success */
-        form.closest('#sib-container').style.display = 'none';
-        successEl.style.display = 'block';
-      } else {
-        /* Server rejected — re-enable button, show quiet inline note */
-        btn.disabled = false;
-        btn.textContent = 'SEND ME THE CHEAT SHEET →';
-        if (errorLabel) {
-          errorLabel.textContent = 'Something went wrong. Please try again.';
-          errorLabel.style.display = 'block';
-        }
-      }
-    })
-    .catch(function () {
-      /* Network failure — re-enable */
-      btn.disabled = false;
-      btn.textContent = 'SEND ME THE CHEAT SHEET →';
-      if (errorLabel) {
-        errorLabel.textContent = 'Connection error. Please check your internet and try again.';
-        errorLabel.style.display = 'block';
-      }
+    /*
+      Brevo processes the form server-side.
+      The iframe load fires when Brevo responds (~1–2 s on good connection).
+      We use that as the "done" signal rather than a timeout guess.
+    */
+    document.getElementById('brevo-target').addEventListener('load', function onLoad() {
+      this.removeEventListener('load', onLoad);
+      if (container) container.style.display = 'none';
+      successEl.style.display = 'block';
     });
   });
 
