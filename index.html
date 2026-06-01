@@ -39,8 +39,8 @@ body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;lin
 .hero{max-width:660px;margin:0 auto;padding:44px 24px 28px;text-align:center}
 .badge{display:inline-block;background:rgba(255,107,53,.12);color:var(--orange);border:1px solid rgba(255,107,53,.32);padding:5px 18px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
 
-/* ── BOOK WRAP — 2.5:3 ratio ── */
-.book-wrap{width:270px;margin:0 auto 28px}
+/* ── BOOK WRAP — new 3D SVG (700:530 viewBox) ── */
+.book-wrap{width:100%;max-width:440px;margin:0 auto 28px}
 .book-wrap svg{width:100%;height:auto;display:block}
 
 h1{font-family:'Sora',sans-serif;font-size:clamp(22px,5.5vw,35px);font-weight:800;line-height:1.15;color:#fff;margin-bottom:10px}
@@ -127,99 +127,132 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
        Cover ratio: 277×332 = 0.834 ≈ 2.5:3 ✓
   ══ -->
   <div class="book-wrap">
-    <svg viewBox="0 0 390 450" xmlns="http://www.w3.org/2000/svg">
+    <svg width="100%" viewBox="0 0 700 530" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="38%" r="60%">
+    <stop offset="0%" stop-color="#0A1628"/>
+    <stop offset="100%" stop-color="#0A1628"/>
+  </radialGradient>
+  <linearGradient id="coverLit" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#0D1E38"/>
+    <stop offset="40%" stop-color="#0A1628"/>
+    <stop offset="100%" stop-color="#071220"/>
+  </linearGradient>
+  <linearGradient id="spLit" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#010508"/>
+    <stop offset="60%" stop-color="#050D18"/>
+    <stop offset="100%" stop-color="#0A1828"/>
+  </linearGradient>
+  <linearGradient id="btmLit" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#8A8472"/>
+    <stop offset="100%" stop-color="#4A4438"/>
+  </linearGradient>
+  <filter id="gs" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur stdDeviation="10"/>
+  </filter>
+  <filter id="gs2" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="4"/>
+  </filter>
+  <!--
+    Previous book total width: x=118 to x=468 = 350px
+    Previous book total height: y=52 to y=462 = 410px
+    Canvas: 690 x 520
 
-      <ellipse cx="207" cy="440" rx="185" ry="10" fill="#000" fill-opacity="0.50"/>
+    To center horizontally: left margin = (690 - 350) / 2 = 170
+      So shift x by: 170 - 118 = +52
 
-      <!-- PAGE STACK: right edge x=82, top y=80, bottom y=412
-           Linear gradient from dark left to light right -->
-      <polygon points="30,96   34,95   34,429  30,430" fill="#AEA690"/>
-      <polygon points="34,95   38,94   38,428  34,429" fill="#B8B09A"/>
-      <polygon points="38,94   42,93   42,427  38,428" fill="#C0B8A2"/>
-      <polygon points="42,93   46,92   46,426  42,427" fill="#C8C0AA"/>
-      <polygon points="46,92   50,91   50,425  46,426" fill="#CEC8B2"/>
-      <polygon points="50,91   54,90   54,424  50,425" fill="#D4CEBC"/>
-      <polygon points="54,90   58,89   58,423  54,424" fill="#D8D2C0"/>
-      <polygon points="58,89   62,88   62,422  58,423" fill="#DCD6C4"/>
-      <polygon points="62,88   66,87   66,421  62,422" fill="#E0DAC8"/>
-      <polygon points="66,87   70,86   70,420  66,421" fill="#E2DCCA"/>
-      <polygon points="70,86   74,85   74,419  70,420" fill="#E5DFCC"/>
-      <polygon points="74,85   78,84   78,418  74,419" fill="#E7E1CE"/>
-      <polygon points="78,84   82,80   82,412  78,418" fill="#E9E3D0"/>
+    To center vertically (book body y=52 to y=432, bottom edge to y=462):
+      Book visual center y = (52 + 462) / 2 = 257
+      Canvas center y = 260
+      Shift y by: 260 - 257 = +3  (almost nothing, nearly centered already)
 
-      <!-- SPINE: P1(30,96) P3(82,80) P4(82,412) P2(30,430) -->
-      <polygon points="30,96  82,80  82,412  30,430" fill="#060E1C"/>
-      <!-- inner ambient strip -->
-      <polygon points="74,81  82,80  82,412  74,413" fill="#0C1C30"/>
-      <!-- hard left edge -->
-      <polygon points="30,96  34,95  34,429  30,430" fill="#030810"/>
+    Apply translate(52, 3) to entire book group.
 
-      <!-- TOP EDGE: P1(30,96) P3(82,80) P5(359,62) P7(315,54) -->
-      <polygon points="30,96  82,80  359,62  315,54" fill="#C0B49A"/>
-      <!-- front lip -->
-      <polygon points="30,96  82,80  82,86  30,102" fill="#A6A082"/>
+    New key points after shift:
+      Cover: TL(230,55) TR(520,65) BR(520,435) BL(230,445)
+      Spine: TL(170,75) TR(230,55) BR(230,445) BL(170,465)
+      Bottom: (230,445)(520,435)(460,455)(170,465)
+      Book spans x=170 to x=520 = 350px, centered in 690 → margins 170 each ✓
+      Book spans y=55 to y=465 = 410px, centered in 520 → margins 55 top, 55 bottom ✓
+  -->
+  <clipPath id="coverClip">
+    <polygon points="230,55 520,65 520,435 230,445"/>
+  </clipPath>
+  <clipPath id="spineClip">
+    <polygon points="170,75 230,55 230,445 170,465"/>
+  </clipPath>
+<mask id="imagine-text-gaps-a1cf5z" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="700" height="530" fill="white"/><rect x="244" y="109" width="68.25" height="14" fill="black" rx="2"/><rect x="440.5333251953125" y="104" width="61.46666717529297" height="14" fill="black" rx="2"/><rect x="307.9583435058594" y="142" width="134.08333587646484" height="18" fill="black" rx="2"/><rect x="261" y="179" width="231.24603271484375" height="59" fill="black" rx="2"/><rect x="256" y="242" width="240.03268432617188" height="47" fill="black" rx="2"/><rect x="271" y="304" width="208" height="16" fill="black" rx="2"/><rect x="337.4166564941406" y="329" width="75.16666412353516" height="21" fill="black" rx="2"/><rect x="337.7583312988281" y="352" width="74.48332977294922" height="13" fill="black" rx="2"/><rect x="304.433349609375" y="230" width="139.566650390625" height="32" fill="black" rx="2"/><rect x="317" y="264" width="116" height="13" fill="black" rx="2"/><rect x="323" y="278.4375" width="104" height="12.4375" fill="black" rx="2"/><rect x="113.82499694824219" y="251" width="172.35000610351562" height="13" fill="black" rx="2"/><rect x="243.10000610351562" y="494" width="203.8000030517578" height="15" fill="black" rx="2"/></mask></defs>
 
-      <!-- BOTTOM EDGE: P2(30,430) P4(82,412) P6(359,394) P8(315,386) -->
-      <polygon points="30,430  82,412  359,394  315,386" fill="#6A6450"/>
+<rect width="690" height="520" fill="#0A1628" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-      <!-- COVER FACE: P3(82,80) P5(359,62) P6(359,394) P4(82,412) -->
-      <polygon points="82,80  359,62  359,394  82,412" fill="#0E2248"/>
+<!-- ground shadow -->
+<ellipse cx="352" cy="482" rx="215" ry="12" fill="#000" opacity="0.7" filter="url(#gs)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.7;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<ellipse cx="352" cy="477" rx="165" ry="6" fill="#000" opacity="0.45" filter="url(#gs2)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.45;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-      <!-- Tiny left ambient — only 26px wide, very low opacity -->
-      <polygon points="82,80  108,79  108,148  82,155" fill="#162E58" opacity="0.35"/>
+<!-- BOTTOM EDGE: (230,445)(520,435)(460,455)(170,465) -->
+<polygon points="230,445 520,435 460,455 170,465" fill="url(#btmLit)" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<polygon points="230,445 520,435 520,439 230,449" fill="#000" opacity="0.18" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.18;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="262" y1="446" x2="520" y2="438" stroke="#9A9484" stroke-width="0.4" opacity="0.5" style="fill:rgb(0, 0, 0);stroke:rgb(154, 148, 132);color:rgb(0, 0, 0);stroke-width:0.4px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="302" y1="447" x2="520" y2="439" stroke="#888278" stroke-width="0.35" opacity="0.4" style="fill:rgb(0, 0, 0);stroke:rgb(136, 130, 120);color:rgb(0, 0, 0);stroke-width:0.35px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.4;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="362" y1="448" x2="520" y2="440" stroke="#908A7C" stroke-width="0.3" opacity="0.35" style="fill:rgb(0, 0, 0);stroke:rgb(144, 138, 124);color:rgb(0, 0, 0);stroke-width:0.3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.35;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="432" y1="448" x2="520" y2="441" stroke="#9A9484" stroke-width="0.3" opacity="0.3" style="fill:rgb(0, 0, 0);stroke:rgb(154, 148, 132);color:rgb(0, 0, 0);stroke-width:0.3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-      <!-- spine crease: P3→P4 -->
-      <line x1="82" y1="80" x2="82" y2="412" stroke="#1A3C6A" stroke-width="1.8"/>
+<!-- SPINE: (170,75)(230,55)(230,445)(170,465) -->
+<polygon points="170,75 230,55 230,445 170,465" fill="url(#spLit)" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<polygon points="222,56 230,55 230,445 222,446" fill="#0C1C30" opacity="0.6" style="fill:rgb(12, 28, 48);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<polygon points="170,75 175,74 175,466 170,465" fill="#010306" opacity="0.85" style="fill:rgb(1, 3, 6);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="230" y1="55" x2="230" y2="445" stroke="#1C3E70" stroke-width="1.5" opacity="0.7" mask="url(#imagine-text-gaps-a1cf5z)" style="fill:rgb(0, 0, 0);stroke:rgb(28, 62, 112);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.7;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-      <!-- ══ COVER CONTENT
-           Centre x = (82+359)/2 = 220.5
-           Safe zone x = 96..345 (249px wide)
-      ══ -->
+<!-- COVER FACE: (230,55)(520,65)(520,435)(230,445) -->
+<polygon points="230,55 520,65 520,435 230,445" fill="url(#coverLit)" style="stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<polygon points="230,55 270,56 270,166 230,167" fill="#0D1E3A" opacity="0.3" style="fill:rgb(13, 30, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<polygon points="502,65 520,65 520,435 502,435" fill="#000" opacity="0.1" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-      <!-- TOP GOLD BAR -->
-      <polygon points="94,99   347,82  347,100  94,117" fill="#B07808"/>
-      <polygon points="94,99   347,82  347,92   94,109" fill="#F0C018"/>
+<!-- COVER CONTENT -->
+<g clip-path="url(#coverClip)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <!-- TOP GOLD BAR -->
+  <polygon points="242,81 504,90 504,109 242,100" fill="#AA7A08" style="fill:rgb(170, 122, 8);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <polygon points="242,81 504,90 504,100 242,91" fill="#F0C020" style="fill:rgb(240, 192, 32);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- BOTTOM GOLD BAR -->
+  <polygon points="242,409 504,403 504,422 242,428" fill="#AA7A08" style="fill:rgb(170, 122, 8);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <polygon points="242,409 504,403 504,415 242,421" fill="#F0C020" style="fill:rgb(240, 192, 32);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-      <!-- BOTTOM GOLD BAR -->
-      <polygon points="94,375  347,358 347,376  94,393" fill="#B07808"/>
-      <polygon points="94,375  347,358 347,368  94,385" fill="#F0C018"/>
+  <text x="248" y="119" font-family="Georgia,serif" font-size="8.5" fill="#1E3450" fill-opacity="0.72" style="fill:rgb(30, 52, 80);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:8.5px;font-weight:400;text-anchor:start;dominant-baseline:auto">REF: SBK-2026</text>
+  <text x="498" y="114" text-anchor="end" font-family="Georgia,serif" font-size="8.5" fill="#1E3450" fill-opacity="0.72" style="fill:rgb(30, 52, 80);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:8.5px;font-weight:400;text-anchor:end;dominant-baseline:auto">RESTRICTED</text>
 
-      <!-- ref lines -->
-      <text x="100" y="130" font-family="Georgia,serif" font-size="8" fill="#1C3350" fill-opacity="0.70">REF: SBK-2026</text>
-      <text x="340" y="124" text-anchor="end" font-family="Georgia,serif" font-size="8" fill="#1C3350" fill-opacity="0.70">RESTRICTED</text>
+  <!-- centre x = (230+520)/2 = 375 -->
+  <text x="375" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="11.5" fill="#4A6888" fill-opacity="0.95" letter-spacing="5" style="fill:rgb(74, 104, 136);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:11.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">THE  2026  US</text>
+  <text x="375" y="225" text-anchor="middle" font-family="Georgia,serif" font-size="48" font-weight="700" fill="#FFFFFF" textLength="220" lengthAdjust="spacingAndGlyphs" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:48px;font-weight:700;text-anchor:middle;dominant-baseline:auto">SURVEY</text>
+  <text x="375" y="279" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="700" fill="#EAB020" textLength="230" lengthAdjust="spacingAndGlyphs" style="fill:rgb(234, 176, 32);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:38px;font-weight:700;text-anchor:middle;dominant-baseline:auto">BLACKBOOK</text>
+  <line x1="252" y1="293" x2="498" y2="297" stroke="#A07010" stroke-width="0.8" opacity="0.4" style="fill:rgb(0, 0, 0);stroke:rgb(160, 112, 16);color:rgb(0, 0, 0);stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.4;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="375" y="316" text-anchor="middle" font-family="Georgia,serif" font-size="10.5" fill="#426080" fill-opacity="0.95" textLength="200" lengthAdjust="spacing" style="fill:rgb(66, 96, 128);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:10.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">5 Platforms  ·  $15–$40/hr  ·  Direct Links</text>
+  <text x="375" y="345" text-anchor="middle" font-family="serif" font-size="13" fill="#C89010" fill-opacity="0.65" style="fill:rgb(200, 144, 16);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:serif;font-size:13px;font-weight:400;text-anchor:middle;dominant-baseline:auto">★  ★  ★  ★  ★</text>
+  <text x="375" y="361" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#2A4262" fill-opacity="0.75" style="fill:rgb(42, 66, 98);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:8px;font-weight:400;text-anchor:middle;dominant-baseline:auto">3,800+ downloads</text>
 
-      <!-- THE 2026 US -->
-      <text x="221" y="164" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#486080" letter-spacing="4" textLength="138" lengthAdjust="spacing">THE  2026  US</text>
+  <g transform="rotate(-17, 375, 255)" opacity="0.68" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.68;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+    <rect x="262" y="213" width="226" height="84" rx="3" fill="none" stroke="#BC1800" stroke-width="3" style="fill:none;stroke:rgb(188, 24, 0);color:rgb(0, 0, 0);stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <rect x="270" y="221" width="210" height="68" rx="2" fill="none" stroke="#BC1800" stroke-width="0.8" opacity="0.45" style="fill:none;stroke:rgb(188, 24, 0);color:rgb(0, 0, 0);stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.45;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <text x="375" y="255" text-anchor="middle" font-family="Georgia,serif" font-size="25" font-weight="700" fill="#CC1800" fill-opacity="0.74" letter-spacing="4" textLength="130" lengthAdjust="spacing" style="fill:rgb(204, 24, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:25px;font-weight:700;text-anchor:middle;dominant-baseline:auto">VERIFIED</text>
+    <text x="375" y="273" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#AA1400" fill-opacity="0.52" letter-spacing="1.5" textLength="108" lengthAdjust="spacing" style="fill:rgb(170, 20, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:8px;font-weight:400;text-anchor:middle;dominant-baseline:auto">SRV-2026-BLACKBOOK</text>
+    <text x="375" y="287" text-anchor="middle" font-family="Georgia,serif" font-size="7.5" fill="#AA1400" fill-opacity="0.42" letter-spacing="1" textLength="96" lengthAdjust="spacing" style="fill:rgb(170, 20, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:7.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">INTELLIGENCE DIV.</text>
+  </g>
+</g>
 
-      <!-- SURVEY — textLength=200 inside 249px safe zone -->
-      <text x="221" y="224" text-anchor="middle" font-family="Georgia,serif" font-size="46" font-weight="700" fill="#FFFFFF" textLength="200" lengthAdjust="spacingAndGlyphs">SURVEY</text>
+<!-- SPINE CONTENT -->
+<g clip-path="url(#spineClip)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+  <polygon points="172,91 230,71 230,80 172,100" fill="#C89010" opacity="0.75" style="fill:rgb(200, 144, 16);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.75;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <polygon points="172,436 230,416 230,425 172,445" fill="#C89010" opacity="0.75" style="fill:rgb(200, 144, 16);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.75;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="200" y="260" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#3A5878" fill-opacity="0.7" letter-spacing="2.5" transform="rotate(-90,200,260)" style="fill:rgb(58, 88, 120);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:8px;font-weight:400;text-anchor:middle;dominant-baseline:auto">SURVEY BLACKBOOK · 2026</text>
+</g>
 
-      <!-- BLACKBOOK -->
-      <text x="221" y="275" text-anchor="middle" font-family="Georgia,serif" font-size="46" font-weight="700" fill="#EAB020" textLength="208" lengthAdjust="spacingAndGlyphs">BLACKBOOK</text>
+<!-- silhouette -->
+<line x1="170" y1="75" x2="170" y2="465" stroke="#000" stroke-width="1.2" opacity="0.5" mask="url(#imagine-text-gaps-a1cf5z)" style="fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);color:rgb(0, 0, 0);stroke-width:1.2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="170" y1="75" x2="520" y2="65" stroke="#1A3060" stroke-width="0.8" opacity="0.5" style="fill:rgb(0, 0, 0);stroke:rgb(26, 48, 96);color:rgb(0, 0, 0);stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="520" y1="65" x2="520" y2="435" stroke="#000" stroke-width="0.7" opacity="0.3" style="fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);color:rgb(0, 0, 0);stroke-width:0.7px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<line x1="170" y1="465" x2="460" y2="455" stroke="#000" stroke-width="0.8" opacity="0.35" style="fill:rgb(0, 0, 0);stroke:rgb(0, 0, 0);color:rgb(0, 0, 0);stroke-width:0.8px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.35;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
 
-      <!-- rule -->
-      <line x1="104" y1="288" x2="338" y2="277" stroke="#A07010" stroke-width="0.7" opacity="0.44"/>
-
-      <!-- subtitle -->
-      <text x="221" y="310" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#406078" textLength="190" lengthAdjust="spacing">5 Platforms  ·  $15–$40/hr  ·  Direct Links</text>
-
-      <!-- stars -->
-      <text x="221" y="336" text-anchor="middle" font-family="serif" font-size="12" fill="#C08E10" fill-opacity="0.62">★  ★  ★  ★  ★</text>
-      <text x="221" y="351" text-anchor="middle" font-family="Georgia,serif" font-size="7.5" fill="#283A58" fill-opacity="0.68">3,800+ downloads</text>
-
-      <!-- VERIFIED STAMP -->
-      <g transform="rotate(-17, 221, 246)">
-        <rect x="120" y="206" width="202" height="80" rx="3" fill="none" stroke="#BC1800" stroke-width="2.8" opacity="0.68"/>
-        <rect x="128" y="214" width="186" height="64" rx="2" fill="none" stroke="#BC1800" stroke-width="0.9" opacity="0.44"/>
-        <text x="221" y="246" text-anchor="middle" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#CC1800" fill-opacity="0.74" letter-spacing="4" textLength="116" lengthAdjust="spacing">VERIFIED</text>
-        <text x="221" y="265" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#AA1400" fill-opacity="0.52" letter-spacing="1.5" textLength="106" lengthAdjust="spacing">SRV-2026-BLACKBOOK</text>
-        <text x="221" y="279" text-anchor="middle" font-family="Georgia,serif" font-size="7.5" fill="#AA1400" fill-opacity="0.42" letter-spacing="1" textLength="94" lengthAdjust="spacing">INTELLIGENCE DIV.</text>
-      </g>
-
-      <!-- SPINE TEXT -->
-      <text x="56" y="246" text-anchor="middle" font-family="Georgia,serif" font-size="7.5" fill="#182C48" fill-opacity="0.65" transform="rotate(-90,56,246)" letter-spacing="2">SURVEY BLACKBOOK · 2026</text>
-
-    </svg>
+<text x="345" y="505" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="#182840" fill-opacity="0.85" letter-spacing="0.5" style="fill:rgb(24, 40, 64);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, serif;font-size:9.5px;font-weight:400;text-anchor:middle;dominant-baseline:auto">surveyblackbook.com  ·  Free Access  ·  2026</text>
+</svg>
   </div><!-- /book-wrap -->
 
   <h1>Every Day on Swagbucks, Someone Else Makes <span class="hl">$18/Hour</span> on a Platform You've Never Heard Of</h1>
@@ -227,7 +260,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
 
   <!-- TOP CTA — replace YOUR_CPAGRIP_LOCKER_URL with your locker link -->
   <div style="margin-bottom:12px">
-    <a class="cta-btn" href="https://ridefiles.net/1897604" target="_blank" rel="noopener">UNLOCK THE BLACKBOOK — IT'S FREE →</a>
+    <a class="cta-btn" href="YOUR_CPAGRIP_LOCKER_URL" target="_blank" rel="noopener">UNLOCK THE BLACKBOOK — IT'S FREE →</a>
   </div>
   <p class="trust-line">
     <span>✓ Free</span> &nbsp;·&nbsp;
@@ -378,7 +411,7 @@ footer{border-top:1px solid var(--border);text-align:center;padding:20px;font-si
   <div class="cta-bottom">
     <h2>Get the Full Blackbook — It's Free</h2>
     <p>All 5 platforms. Direct links. 24-hour checklist. Anti-disqualification rules. Stacking method.</p>
-    <a class="cta-btn" href="https://ridefiles.net/1897604" target="_blank" rel="noopener">UNLOCK INSTANT ACCESS →</a>
+    <a class="cta-btn" href="YOUR_CPAGRIP_LOCKER_URL" target="_blank" rel="noopener">UNLOCK INSTANT ACCESS →</a>
     <p class="scarcity">⚡ Prolific has an active waitlist — every week you delay is earnings gone</p>
   </div>
 
